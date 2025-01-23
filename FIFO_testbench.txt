@@ -1,0 +1,38 @@
+// Inputs
+reg [7:0] data_in;
+reg clk;
+reg reset;
+reg read;
+reg write;
+// Outputs
+wire [7:0] data_out;
+wire [5:0] count;
+wire full;
+wire empty;
+// Instantiate the Unit Under Test (UUT)
+fifo uut (
+.data_in(data_in), 
+.clk(clk), 
+.reset(reset), 
+.read(read), 
+.write(write), 
+.data_out(data_out), 
+.count(count), 
+.full(full), 
+.empty(empty)
+);
+initial begin
+// Initialize Inputs
+data_in =8'b00000000;
+clk = 0;
+reset = 1;
+read = 0;
+write = 0;
+#5 reset=0;
+end
+ always #4 data_in=data_in+1;
+ always #2 read=read+1;
+always #1 clk=~clk;
+always #1 write=write+1;
+initial #500 $finish;
+endmodule
